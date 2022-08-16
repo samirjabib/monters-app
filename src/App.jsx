@@ -8,7 +8,7 @@ class App extends Component{ //Componente Funcional
 
     this.state ={
       monsters:[],
-      searchString:[]
+      searchString:[],
     }
     
 
@@ -22,16 +22,29 @@ class App extends Component{ //Componente Funcional
         () => {
         return {monsters: users}
         },
-      ))
-      
-  }
+      ));
+  };
+
+  onSearchChange = (event) => {
+    console.log(event.target.value)
+    const searchString = event.target.value.toLocaleLowerCase()
+  
+    this.setState(() => {
+      return { searchString }
+    });
+  };
 
   render(){
 
 
-    const filteredMonster = this.state.monsters.filter(monster => {
-      return monster.name.includes(this.state.searchString);
-    })
+    const {monsters,searchString} = this.state;
+    const { onSearchChange } = this;
+
+
+
+    const filteredMonster = monsters.filter(monster => {
+      return monster.name.includes(searchString);
+    });
 
 
     return(
@@ -41,15 +54,7 @@ class App extends Component{ //Componente Funcional
           className='search-box' 
           placeholder='search monster' 
           type='search' 
-          onChange={ 
-            (event) => {
-              console.log(event.target.value)
-              const searchString = event.target.value.toLocaleLowerCase()
-              
-              this.setState(() => {
-                return { searchString }
-              })
-              }}/>
+          onChange={ onSearchChange  }/>
         {
           filteredMonster.map( (monster) => {
             return (
