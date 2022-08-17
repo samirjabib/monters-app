@@ -1,5 +1,7 @@
 import './App.css'
-import { Component } from 'react'
+import { Component } from 'react';
+import CardList from './components/card-list/card-list.component';
+import SearchBox from './components/search-box/search-box.component';
 
 
 class App extends Component{ //Componente Funcional 
@@ -26,7 +28,6 @@ class App extends Component{ //Componente Funcional
   };
 
   onSearchChange = (event) => {
-    console.log(event.target.value)
     const searchString = event.target.value.toLocaleLowerCase()
   
     this.setState(() => {
@@ -50,20 +51,8 @@ class App extends Component{ //Componente Funcional
     return(
 
       <div className='App'>
-        <input 
-          className='search-box' 
-          placeholder='search monster' 
-          type='search' 
-          onChange={ onSearchChange  }/>
-        {
-          filteredMonster.map( (monster) => {
-            return (
-              <h1 key={monster.name}>
-              {monster.name}
-              </h1>
-            )
-          })
-        }
+        <SearchBox onSearchChange={ onSearchChange }/>
+        <CardList monsters={ filteredMonster }/>
       </div>
     )
   }
